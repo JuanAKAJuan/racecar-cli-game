@@ -122,7 +122,6 @@ class Racetrack
         void MoveUserCar();
         void MoveCPUSpeedCar();
         void MoveCPUHandleCar();
-        void UserFirstMove();
         void UpdateUserPosition();
         void DeleteOldUserCar();
         void WinningScreen();

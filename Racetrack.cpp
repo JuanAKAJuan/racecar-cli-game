@@ -314,11 +314,13 @@ void Racetrack::MoveUserCar()
     m_OldXCoordinate = user.GetColumnNumber();
     m_OldYCoordinate = user.GetRowNumber();
 
-    do
+    std::cout << "Enter X Coordinate: ";
+    while (!(std::cin >> m_XCoordinate) || m_XCoordinate > user.GetColumnVelocity() || m_XCoordinate < -(user.GetColumnVelocity()))
     {
-        std::cout << "Enter X Coordinate: ";
-        std::cin >> m_XCoordinate;
-    } while (m_XCoordinate > user.GetColumnVelocity() || m_XCoordinate < -(user.GetColumnVelocity()));
+        std::cout << "Please enter a valid number: ";
+        std::cin.clear();
+        std::cin.ignore(123, '\n');
+    }
 
     // As long as the user's input is not 0, and their velocity hasn't reached its max, the column
     // velocity will increase by 1.
@@ -330,11 +332,13 @@ void Racetrack::MoveUserCar()
         }
     }
 
-    do
+    std::cout << "Enter Y Coordinate: ";
+    while (!(std::cin >> m_YCoordinate) || m_YCoordinate > user.GetRowVelocity() || m_YCoordinate < -(user.GetRowVelocity()))
     {
-        std::cout << "Enter Y Coordinate: ";
-        std::cin >> m_YCoordinate;
-    } while (m_YCoordinate > user.GetRowVelocity() || m_YCoordinate < -(user.GetRowVelocity()));
+        std::cout << "Please enter a valid number: ";
+        std::cin.clear();
+        std::cin.ignore(123, '\n');
+    }
 
     // As long as the user's input is not 0, and their velocity hasn't reached its max, the row
     // velocity will increase by 1.
@@ -352,6 +356,7 @@ void Racetrack::MoveUserCar()
     m_XSlope = (float(m_OldXCoordinate) - float(m_NewXCoordinate)) / 10;
     m_YSlope = (float(m_OldYCoordinate) - float(m_NewYCoordinate)) / 10;
 
+    // TODO: Setup wall and car collision for diagonal movements
     // Go from old coordinates to new ones while showing the slanted path
     for (int i = 0; i < 10; i++)
     {
@@ -396,41 +401,6 @@ void Racetrack::DisplayAllStats()
     user.DisplayStats();
     speed.DisplayStats();
     handle.DisplayStats();
-}
-
-void Racetrack::UserFirstMove()
-{
-    // Starting conditions only allowing the player to move 1 space in either the X or Y coordinate, but not both.
-    do
-    {
-        std::cout << "Enter X Coordinate: ";
-        std::cin >> m_XCoordinate;
-    } while (m_XCoordinate > 1 || m_XCoordinate < 0);
-    // TODO: make it so the loop continues even if what they put in isn't a number
-
-    if (m_XCoordinate == 1)
-    {
-        do
-        {
-            std::cout << "Enter Y Coordinate: ";
-            std::cin >> m_YCoordinate;
-        } while (m_YCoordinate != 0);
-        // Set X Velocity to 1
-        user.SetColumnVelocity(2);
-    }
-    else
-    {
-        do
-        {
-            std::cout << "Enter Y Coordinate: ";
-            std::cin >> m_YCoordinate;
-        } while (m_YCoordinate > 1 || m_YCoordinate < 0);
-        // Set Y Velocity to 1
-        user.SetRowVelocity(2);
-    }
-
-    CheckUserCollision();
-
 }
 
 void Racetrack::CheckUserCollision()

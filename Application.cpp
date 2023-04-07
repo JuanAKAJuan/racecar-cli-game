@@ -19,11 +19,6 @@ void Application::Run()
     track.PutCPUSpeedCarOnTrack();
     track.PutCPUHandleCarOnTrack();
 
-    track.DisplayTrack();
-    std::cout << std::endl;
-    track.DisplayAllStats();
-    track.UserFirstMove();
-     
     while (true)
     {
         track.DisplayTrack();

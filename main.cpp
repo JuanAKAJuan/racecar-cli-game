@@ -2,7 +2,6 @@
 // TODO: Setup a win condition for the Speed Car.
 // TODO: Setup the Speed car movement.
 // TODO: Setup the Handle car movement.
-// TODO: Setup a collision that will check if cars collide on slant / jump over each other.
 // TODO: Setup an algorithm to set the weights on any track.
 // TODO: Make sure Max Speed can't be zero.
 // TODO: Setup a way for the user to pick a track.
