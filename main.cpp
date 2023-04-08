@@ -6,19 +6,18 @@
 // TODO: Make sure Max Speed can't be zero.
 // TODO: Setup a way for the user to pick a track.
 // TODO: Implement a custom feature.
-// TODO: Make cars be able to land in a previous position after colliding with a car or wall instead of just
+// TODO: Make cars be able to land in a previous position after colliding with a
+// car or wall instead of just
 //       just keeping them in their current position and skipping their turn.
-// 
+//
 // NOTE: X coordinates = Columns, Y coordinates = Rows
 
 #include "Application.h"
 
+int main() {
+  Application app;
 
-int main()
-{
-    Application app;
+  app.Run();
 
-    app.Run();
-
-    return 0;
+  return 0;
 }

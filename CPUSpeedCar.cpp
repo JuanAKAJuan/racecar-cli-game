@@ -1,6 +1,3 @@
 #include "CPUSpeedCar.h"
 
-CPUSpeedCar::CPUSpeedCar()
-{
-    SetIDNumber('2');
-}
+CPUSpeedCar::CPUSpeedCar() { SetIDNumber('2'); }

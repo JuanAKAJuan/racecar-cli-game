@@ -2,12 +2,11 @@
 
 #include "Racetrack.h"
 
-class Application
-{
-    public:
-        void Run();
+class Application {
+public:
+  void Run();
 
-    private:
-        //Create RaceTrack object
-        Racetrack track;
+private:
+  // Create RaceTrack object
+  Racetrack track;
 };

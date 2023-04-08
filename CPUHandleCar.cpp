@@ -1,6 +1,3 @@
 #include "CPUHandleCar.h"
 
-CPUHandleCar::CPUHandleCar()
-{
-    SetIDNumber('3');
-}
+CPUHandleCar::CPUHandleCar() { SetIDNumber('3'); }
