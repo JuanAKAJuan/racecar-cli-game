@@ -2,8 +2,7 @@
 
 #include "RaceCars.h"
 
-class UserCar : public RaceCars
-{
+class UserCar : public RaceCars {
 public:
-    UserCar();
+  UserCar();
 };
