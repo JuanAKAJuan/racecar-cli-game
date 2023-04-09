@@ -14,10 +14,11 @@
 
 #include "Application.h"
 
-int main() {
-  Application app;
+int main()
+{
+	Application app;
 
-  app.Run();
+	app.Run();
 
-  return 0;
+	return 0;
 }

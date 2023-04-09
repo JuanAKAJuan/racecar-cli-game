@@ -1,3 +1,6 @@
 #include "UserCar.h"
 
-UserCar::UserCar() { SetIDNumber('1'); }
+UserCar::UserCar()
+{
+	SetIDNumber('1');
+}

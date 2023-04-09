@@ -2,7 +2,8 @@
 
 #include "RaceCars.h"
 
-class CPUHandleCar : public RaceCars {
-public:
-  CPUHandleCar();
+class CPUHandleCar : public RaceCars
+{
+ public:
+	CPUHandleCar();
 };
