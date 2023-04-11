@@ -14,30 +14,30 @@
 
 class Racetrack
 {
- public:
+public:
 	/**
 	 * Initialize the racetrack
 	 */
 	Racetrack();
 
 	/**
+	 * De-construct the racetrack
 	 */
 	~Racetrack();
-	* De-construct the racetrack
 
 	/**
 	 * Retrieve the m_Track Height
 	 *@pre m_Track is valid
 	 *@post return the number of rows in the m_Track
 	 */
-	int Height() const;
+	[[nodiscard]] int Height() const;
 
 	/**
 	 * Retrieve the m_Track Width
 	 * @pre m_Track is valid--i.e., all rows are of the same length.
 	 * @post return the number of columns in the m_Track
 	 */
-	int Width() const;
+	[[nodiscard]] int Width() const;
 
 	/**
 	 * Read the m_Track from an input stream, istream
@@ -68,8 +68,8 @@ class Racetrack
 	 * @post convert string value "T" into a blank space. T's represent the actual
 	 *m_Track
 	 **/
-	std::string ReplaceStrChar(std::string str, const std::string& replace,
-		char ch);
+	static std::string ReplaceStrChar(std::string str, const std::string& replace,
+			char ch);
 
 	/**
 	 *Initialize m_Weights for the m_Track
@@ -110,11 +110,7 @@ class Racetrack
 	 */
 	void SetWeight(int y, int x, int value);
 
-	bool GetWonTheGame();
-
 	// My functions
-	void CheckUserCollision();
-
 	void DisplayAllStats();
 
 	void PutUserCarOnTrack();
@@ -135,7 +131,7 @@ class Racetrack
 
 	static void WinningScreen();
 
- private:
+private:
 	UserCar user;
 	CPUSpeedCar speed;
 	CPUHandleCar handle;

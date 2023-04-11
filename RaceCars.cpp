@@ -1,6 +1,6 @@
 #include "RaceCars.h"
 
-void RaceCars::DisplayStats()
+void RaceCars::DisplayStats() const
 {
 	std::cout << "Car ID: " << this->GetIDNumber()
 			  << " Coordinates: " << this->GetColumnNumber() << ","

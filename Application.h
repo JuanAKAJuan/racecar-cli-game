@@ -4,10 +4,10 @@
 
 class Application
 {
- public:
+public:
 	void Run();
 
- private:
+private:
 	// Create RaceTrack object
 	Racetrack track;
 };

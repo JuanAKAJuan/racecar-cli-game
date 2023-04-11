@@ -6,11 +6,11 @@ void Application::Run()
 			  << std::endl;
 	std::cout << "  / ____/ ___// ____/  / __ \\____ ______(_)___  ____ _"
 			  << std::endl;
-	std::cout << " / /    \\__ \\/ /      / /_/ / __ `/ ___/ / __ \\/ __ `/"
+	std::cout << R"( / /    \__ \/ /      / /_/ / __ `/ ___/ / __ \/ __ `/)"
 			  << std::endl;
 	std::cout << "/ /___ ___/ / /___   / _, _/ /_/ / /__/ / / / / /_/ / "
 			  << std::endl;
-	std::cout << "\\____//____/\\____/  /_/ |_|\\__,_/\\___/_/_/ /_/\\__, /  "
+	std::cout << R"(\____//____/\____/  /_/ |_|\__,_/\___/_/_/ /_/\__, /  )"
 			  << std::endl;
 	std::cout << "                                             /____/   "
 			  << std::endl;
@@ -31,5 +31,6 @@ void Application::Run()
 		std::cout << std::endl;
 		track.DisplayAllStats();
 		track.MoveUserCar();
+		track.MoveCPUSpeedCar();
 	}
 }

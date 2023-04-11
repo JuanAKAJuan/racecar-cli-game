@@ -4,6 +4,6 @@
 
 class UserCar : public RaceCars
 {
- public:
+public:
 	UserCar();
 };

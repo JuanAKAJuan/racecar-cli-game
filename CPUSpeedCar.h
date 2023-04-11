@@ -4,6 +4,6 @@
 
 class CPUSpeedCar : public RaceCars
 {
- public:
+public:
 	CPUSpeedCar();
 };
