@@ -2,7 +2,8 @@
 #include <iostream>
 #include <string>
 
-Racetrack::Racetrack() : m_Track()
+Racetrack::Racetrack()
+	: m_Track()
 {
 	// Let the initializer list construct the m_Track vector
 	// m_Weights can not be created until the size of the m_Track is known
@@ -51,8 +52,7 @@ void Racetrack::Read(std::istream& ins)
 /**
  *Convert string into character
  */
-std::string Racetrack::ReplaceStrChar(std::string str,
-		const std::string& replace, char ch)
+std::string Racetrack::ReplaceStrChar(std::string str, const std::string& replace, char ch)
 {
 	// set our locator equal to the first appearance of any character in replace
 	size_t found = str.find_first_of(replace);
@@ -60,7 +60,7 @@ std::string Racetrack::ReplaceStrChar(std::string str,
 	while (found != std::string::npos)
 	{
 		// While our position in the sting is in range.
-		str[found] = ch; // Change the character at position.
+		str[found] = ch;                               // Change the character at position.
 		found = str.find_first_of(replace, found + 1); // Relocate again.
 	}
 
@@ -120,8 +120,7 @@ void Racetrack::DisplayTrack()
  */
 void Racetrack::DisplayWeights()
 {
-	std::cout << "********************TRACK WEIGHTS***********************"
-			  << std::endl;
+	std::cout << "********************TRACK WEIGHTS***********************" << std::endl;
 	for (int i = 0; i < Height(); i++)
 	{
 		for (int j = 0; j < Width(); j++)
@@ -137,9 +136,7 @@ void Racetrack::DisplayWeights()
 		}
 		std::cout << std::endl;
 	}
-	std::cout << "********************TRACK WEIGHTS***********************"
-			  << std::endl
-			  << std::endl;
+	std::cout << "********************TRACK WEIGHTS***********************" << std::endl << std::endl;
 }
 
 /**
@@ -270,8 +267,7 @@ void Racetrack::PutUserCarOnTrack()
 			{
 				user.SetRowNumber(row);
 				user.SetColumnNumber(column);
-				m_Track[user.GetRowNumber()][user.GetColumnNumber()] =
-						user.GetIDNumber();
+				m_Track[user.GetRowNumber()][user.GetColumnNumber()] = user.GetIDNumber();
 				break;
 			}
 		}
@@ -289,8 +285,7 @@ void Racetrack::PutCPUSpeedCarOnTrack()
 			{
 				speed.SetRowNumber(row);
 				speed.SetColumnNumber(column);
-				m_Track[speed.GetRowNumber()][speed.GetColumnNumber()] =
-						speed.GetIDNumber();
+				m_Track[speed.GetRowNumber()][speed.GetColumnNumber()] = speed.GetIDNumber();
 				return;
 			}
 		}
@@ -307,8 +302,7 @@ void Racetrack::PutCPUHandleCarOnTrack()
 			{
 				handle.SetRowNumber(row);
 				handle.SetColumnNumber(column);
-				m_Track[handle.GetRowNumber()][handle.GetColumnNumber()] =
-						handle.GetIDNumber();
+				m_Track[handle.GetRowNumber()][handle.GetColumnNumber()] = handle.GetIDNumber();
 				return;
 			}
 		}
@@ -318,12 +312,11 @@ void Racetrack::PutCPUHandleCarOnTrack()
 void Racetrack::MoveUserCar()
 {
 	// Get the users current coordinates
-	m_OldXCoordinate = user.GetColumnNumber();
-	m_OldYCoordinate = user.GetRowNumber();
+	float oldXCoordinate = user.GetColumnNumber();
+	float oldYCoordinate = user.GetRowNumber();
 
 	std::cout << "Enter X Coordinate: ";
-	while (!(std::cin >> m_XCoordinate) ||
-		   m_XCoordinate > user.GetColumnVelocity() ||
+	while (!(std::cin >> m_XCoordinate) || m_XCoordinate > user.GetColumnVelocity() ||
 		   m_XCoordinate < -(user.GetColumnVelocity()))
 	{
 		std::cout << "Please enter a valid number: ";
@@ -342,8 +335,7 @@ void Racetrack::MoveUserCar()
 	}
 
 	std::cout << "Enter Y Coordinate: ";
-	while (!(std::cin >> m_YCoordinate) ||
-		   m_YCoordinate > user.GetRowVelocity() ||
+	while (!(std::cin >> m_YCoordinate) || m_YCoordinate > user.GetRowVelocity() ||
 		   m_YCoordinate < -(user.GetRowVelocity()))
 	{
 		std::cout << "Please enter a valid number: ";
@@ -362,37 +354,29 @@ void Racetrack::MoveUserCar()
 	}
 
 	// Update new positions based on the coordinates the user typed in
-	m_NewXCoordinate = user.GetColumnNumber() + m_XCoordinate;
-	m_NewYCoordinate = user.GetRowNumber() + m_YCoordinate;
-	m_XSlope = (float(m_OldXCoordinate) - float(m_NewXCoordinate)) / 10;
-	m_YSlope = (float(m_OldYCoordinate) - float(m_NewYCoordinate)) / 10;
+	int newXCoordinate = user.GetColumnNumber() + m_XCoordinate;
+	int newYCoordinate = user.GetRowNumber() + m_YCoordinate;
+	m_XSlope = (float(oldXCoordinate) - float(newXCoordinate)) / 10;
+	m_YSlope = (float(oldYCoordinate) - float(newYCoordinate)) / 10;
 
 	// Go from old coordinates to new ones while showing the slanted path
 	for (int i = 0; i < 10; i++)
 	{
-		m_OldXCoordinate = m_OldXCoordinate - m_XSlope;
-		m_OldYCoordinate = m_OldYCoordinate - m_YSlope;
-		bool checkFinish =
-				m_Weights[int(round(m_OldYCoordinate))][int(round(m_OldXCoordinate))] ==
-				m_W_FINISH;
-		bool checkOldWall =
-				m_Weights[int(round(m_OldYCoordinate))][int(round(m_OldXCoordinate))] ==
-				m_W_WALL;
-		bool checkNewWall =
-				m_Weights[int(round(m_NewYCoordinate))][int(round(m_NewXCoordinate))] ==
-				m_W_WALL;
-		bool speedOldCollision =
-				m_Track[int(round(m_OldYCoordinate))][int(round(m_OldXCoordinate))] ==
-				m_Track[speed.GetRowNumber()][speed.GetColumnNumber()];
-		bool handleOldCollision =
-				m_Track[int(round(m_OldYCoordinate))][int(round(m_OldXCoordinate))] ==
-				m_Track[handle.GetRowNumber()][handle.GetColumnNumber()];
-		bool speedNewCollision =
-				m_Track[int(round(m_NewYCoordinate))][int(round(m_NewXCoordinate))] ==
-				m_Track[speed.GetRowNumber()][speed.GetColumnNumber()];
-		bool handleNewCollision =
-				m_Track[int(round(m_NewYCoordinate))][int(round(m_NewXCoordinate))] ==
-				m_Track[handle.GetRowNumber()][handle.GetColumnNumber()];
+		oldXCoordinate = oldXCoordinate - m_XSlope;
+		oldYCoordinate = oldYCoordinate - m_YSlope;
+
+		// Check for collisions and if the user passed the finish line.
+		bool checkFinish = m_Weights[int(round(oldYCoordinate))][int(round(oldXCoordinate))] == m_W_FINISH;
+		bool checkOldWall = m_Weights[int(round(oldYCoordinate))][int(round(oldXCoordinate))] == m_W_WALL;
+		bool checkNewWall = m_Weights[int(round(newYCoordinate))][int(round(newXCoordinate))] == m_W_WALL;
+		bool speedOldCollision = m_Track[int(round(oldYCoordinate))][int(round(oldXCoordinate))] ==
+								 m_Track[speed.GetRowNumber()][speed.GetColumnNumber()];
+		bool handleOldCollision = m_Track[int(round(oldYCoordinate))][int(round(oldXCoordinate))] ==
+								  m_Track[handle.GetRowNumber()][handle.GetColumnNumber()];
+		bool speedNewCollision = m_Track[int(round(newYCoordinate))][int(round(newXCoordinate))] ==
+								 m_Track[speed.GetRowNumber()][speed.GetColumnNumber()];
+		bool handleNewCollision = m_Track[int(round(newYCoordinate))][int(round(newXCoordinate))] ==
+								  m_Track[handle.GetRowNumber()][handle.GetColumnNumber()];
 
 		// Check to see if the user has won
 		if (checkFinish)
@@ -422,8 +406,7 @@ void Racetrack::MoveUserCar()
 			user.SetRowVelocity(1);
 			break;
 		}
-		else if (speedOldCollision || handleOldCollision || speedNewCollision ||
-				 handleNewCollision)
+		else if (speedOldCollision || handleOldCollision || speedNewCollision || handleNewCollision)
 		{
 			// Notifies the user they hit another car, resets their velocities, and
 			// lowers their max speed by 1
@@ -441,61 +424,144 @@ void Racetrack::MoveUserCar()
 			break;
 		}
 	}
+
 	DeleteOldUserCar();
 	UpdateUserPosition();
 }
 
 void Racetrack::MoveCPUSpeedCar()
 {
-	int currentYPosition = speed.GetRowNumber();
-	int currentXPosition = speed.GetColumnNumber();
+	float currentYPosition = speed.GetRowNumber();
+	float currentXPosition = speed.GetColumnNumber();
+	int oldYPosition = speed.GetRowNumber();
+	int oldXPosition = speed.GetColumnNumber();
 	int newYPosition = 0;
 	int newXPosition = 0;
-	float ySlope = (float(currentYPosition) * float(newYPosition)) / 10;
-	float xSlope = (float(currentXPosition) * float(newXPosition)) / 10;
+	int lowestNumber = m_Weights[int(currentYPosition)][int(currentXPosition)];
+	bool loseTurn = false;
 
-	// TODO: Figure out how to check the spots around the car in a square looking shape.
+	// Look at the elements around the car.
+	for (int row = int(currentYPosition) - speed.GetRowVelocity();
+		 row <= int(currentYPosition) + speed.GetRowVelocity(); row++)
+	{
+		for (int column = int(currentXPosition) - speed.GetColumnVelocity();
+			 column <= int(currentXPosition) + speed.GetColumnVelocity(); column++)
+		{
+			// Skip over the Speed Car and just look at the surrounding elements.
+			if (row == int(currentYPosition) && column == int(currentXPosition))
+			{
+				continue;
+			}
 
-	// 1. Check around the car and see what is the lowest weight that the car can reach.
-	// 2. Get that position and set its X and Y coordinates equal to the newPositions.
-	// 3. Use that newPositions to find the slope and move the car whilst checking its path for walls
-	//    and other cars.
+			if (m_Weights[row][column] < lowestNumber)
+			{
+				lowestNumber = m_Weights[row][column];
+				newYPosition = row;
+				newXPosition = column;
+			}
 
-	std::cout << m_Weights[speed.GetRowNumber()][speed.GetColumnNumber()] - 1 << std::endl;
+			std::cout << row << "," << column << std::endl;
+		}
+	}
 
-	// NOTE: Use this as a guide to check around the car
-//	char grid[5][5]; // example 2D array
-//
-//// assume the character we want to check around is at position (2, 2)
-//	int row = 2;
-//	int col = 2;
-//
-//// iterate over the neighboring cells using nested loops
-//	for (int i = row - 1; i <= row + 1; i++) {
-//		for (int j = col - 1; j <= col + 1; j++) {
-//			// skip the current cell if it is outside the grid or is the character itself
-//			if (i < 0 || i >= 5 || j < 0 || j >= 5 || (i == row && j == col)) {
-//				continue;
-//			}
-//
-//			// do something with the character in the neighboring cell, e.g. print it
-//			std::cout << "Neighbor at (" << i << ", " << j << "): " << grid[i][j] << std::endl;
-//		}
-//	}
+	std::cout << lowestNumber << std::endl;
+	std::cout << newYPosition << "," << newXPosition << std::endl;
+
+	float ySlope = (currentYPosition - float(newYPosition)) / 10;
+	float xSlope = (currentXPosition - float(newXPosition)) / 10;
+
+	for (int i = 0; i < 10; i++)
+	{
+		currentYPosition = currentYPosition - ySlope;
+		currentXPosition = currentXPosition - xSlope;
+
+		std::cout << currentYPosition << "," << currentXPosition << std::endl;
+
+		bool checkFinish = m_Weights[int(round(currentYPosition))][int(round(currentXPosition))] == m_W_FINISH;
+		bool checkOldWall = m_Weights[int(round(currentYPosition))][int(round(currentXPosition))] == m_W_WALL;
+		bool checkNewWall = m_Weights[int(round(newYPosition))][int(round(newXPosition))] == m_W_WALL;
+		bool userOldCollision = m_Track[int(round(currentYPosition))][int(round(currentXPosition))] ==
+								m_Track[user.GetRowNumber()][user.GetColumnNumber()];
+		bool handleOldCollision = m_Track[int(round(currentYPosition))][int(round(currentXPosition))] ==
+								  m_Track[handle.GetRowNumber()][handle.GetColumnNumber()];
+		bool userNewCollision = m_Track[int(round(newYPosition))][int(round(newXPosition))] ==
+								m_Track[user.GetRowNumber()][user.GetColumnNumber()];
+		bool handleNewCollision = m_Track[int(round(newYPosition))][int(round(newXPosition))] ==
+								  m_Track[handle.GetRowNumber()][handle.GetColumnNumber()];
+
+		if (checkFinish)
+		{
+			LosingScreen();
+			DeleteOldSpeedCar();
+			UpdateSpeedPosition(newYPosition, newXPosition);
+			DisplayTrack();
+			std::cin.ignore();
+			std::cin.get();
+			exit(0);
+		}
+		else if (checkOldWall || checkNewWall)
+		{
+			std::cout << "Car 2 hit a wall! Their velocity has been reset and max speed "
+						 "has been decreased."
+					  << std::endl;
+			if (speed.GetMaxSpeed() != 1)
+			{
+				speed.SetMaxSpeed(speed.GetMaxSpeed() - 1);
+			}
+			speed.SetColumnVelocity(1);
+			speed.SetRowVelocity(1);
+			loseTurn = true;
+			break;
+		}
+		else if (userOldCollision || handleOldCollision || userNewCollision || handleNewCollision)
+		{
+			std::cout << "Car 2 hit a car! Their velocity has been reset and max speed "
+						 "has been decreased."
+					  << std::endl;
+			if (speed.GetMaxSpeed() != 1)
+			{
+				speed.SetMaxSpeed(speed.GetMaxSpeed() - 1);
+			}
+			speed.SetColumnVelocity(1);
+			speed.SetRowVelocity(1);
+			loseTurn = true;
+			break;
+		}
+	}
+
+	if (!loseTurn)
+	{
+		// As long as the speed car's newYPosition is not 0, and their velocity hasn't reached its // max, the row velocity will increase by 1.
+		if (abs(newYPosition - int(oldYPosition)) > 0)
+		{
+			if (speed.GetRowVelocity() < speed.GetMaxSpeed())
+			{
+				speed.SetRowVelocity(speed.GetRowVelocity() + 1);
+			}
+		}
+
+		// As long as the speed car's newXPosition is not 0, and their velocity hasn't reached its
+		// max, the column velocity will increase by 1.
+		if (abs(newXPosition - int(oldXPosition)) > 0)
+		{
+			if (speed.GetColumnVelocity() < speed.GetMaxSpeed())
+			{
+				speed.SetColumnVelocity(speed.GetColumnVelocity() + 1);
+			}
+		}
+
+		DeleteOldSpeedCar();
+		UpdateSpeedPosition(newYPosition, newXPosition);
+	}
 
 }
 
 void Racetrack::MoveCPUHandleCar()
 {
-
 }
 
 void Racetrack::UpdateUserPosition()
 {
-	// Use player's input to move the car
-	// Reversed the x and y Coordinates since they make more sense for x to be
-	// associated with columns and y to be associated with rows when it comes to
-	// movement.
 	user.SetRowNumber(user.GetRowNumber() + m_YCoordinate);
 	user.SetColumnNumber(user.GetColumnNumber() + m_XCoordinate);
 	m_Track[user.GetRowNumber()][user.GetColumnNumber()] = user.GetIDNumber();
@@ -503,7 +569,6 @@ void Racetrack::UpdateUserPosition()
 
 void Racetrack::DeleteOldUserCar()
 {
-	// Delete old position from track.
 	m_Track[user.GetRowNumber()][user.GetColumnNumber()] = ' ';
 }
 
@@ -516,11 +581,31 @@ void Racetrack::DisplayAllStats()
 
 void Racetrack::WinningScreen()
 {
-	std::cout << "__   _____  _   _  __        _____  _   _ _" << std::endl;
-	std::cout << R"(\ \ / / _ \| | | | \ \      / / _ \| \ | | |)"
-			  << std::endl;
-	std::cout << R"( \ V / | | | | | |  \ \ /\ / / | | |  \| | |)" << std::endl;
-	std::cout << "  | || |_| | |_| |   \\ V  V /| |_| | |\\  |_|" << std::endl;
-	std::cout << R"(  |_| \___/ \___/     \_/\_/  \___/|_| \_(_))"
-			  << std::endl;
+	std::cout << "██╗   ██╗ ██████╗ ██╗   ██╗    ██╗    ██╗ ██████╗ ███╗   ██╗" << std::endl;
+	std::cout << "╚██╗ ██╔╝██╔═══██╗██║   ██║    ██║    ██║██╔═══██╗████╗  ██║" << std::endl;
+	std::cout << "  ████╔╝ ██║   ██║██║   ██║    ██║ █╗ ██║██║   ██║██╔██╗ ██║" << std::endl;
+	std::cout << "  ╚██╔╝  ██║   ██║██║   ██║    ██║███╗██║██║   ██║██║╚██╗██║" << std::endl;
+	std::cout << "   ██║   ╚██████╔╝╚██████╔╝    ╚███╔███╔╝╚██████╔╝██║ ╚████║" << std::endl;
+	std::cout << "   ╚═╝    ╚═════╝  ╚═════╝      ╚══╝╚══╝  ╚═════╝ ╚═╝  ╚═══╝" << std::endl;
+
+}
+
+void Racetrack::UpdateSpeedPosition(int newYCoord, int newXCoord)
+{
+	speed.SetRowNumber(newYCoord);
+	speed.SetColumnNumber(newXCoord);
+	m_Track[newYCoord][newXCoord] = speed.GetIDNumber();
+}
+
+void Racetrack::DeleteOldSpeedCar()
+{
+	m_Track[speed.GetRowNumber()][speed.GetColumnNumber()] = ' ';
+}
+void Racetrack::LosingScreen()
+{
+	std::cout << " ▄· ▄▌      ▄• ▄▌  ▄▄▌        .▄▄ · ▄▄▄▄▄▄" << std::endl;
+	std::cout << "▐█▪██▌ ▄█▀▄ █▪██▌  ██•   ▄█▀▄ ▐█ ▀. ▀•██ ▀" << std::endl;
+	std::cout << "▐█▌▐█▪▐█▌.▐▌█▌▐█▌  ██ ▪ ▐█▌.▐▌▄▀▀▀█▄  ▐█.▪" << std::endl;
+	std::cout << " ▐█▀·.▐█▌.▐▌▐█▄█▌  ▐█▌ ▄▐█▌.▐▌▐█▄▪▐█  ▐█▌·" << std::endl;
+	std::cout << "  ▀ •  ▀█▄▀▪ ▀▀▀   .▀▀▀  ▀█▄▀▪ ▀▀▀▀   ▀▀▀" << std::endl;
 }

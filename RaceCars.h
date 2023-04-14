@@ -4,36 +4,36 @@
 
 class RaceCars
 {
-public:
+ public:
 	void DisplayStats() const;
 
 	/* Getters */
-	[[nodiscard]] char GetIDNumber() const
+	char GetIDNumber() const
 	{
 		return m_IDNumber;
 	}
 
-	[[nodiscard]] int GetRowNumber() const
+	int GetRowNumber() const
 	{
 		return m_RowNumber;
 	}
 
-	[[nodiscard]] int GetColumnNumber() const
+	int GetColumnNumber() const
 	{
 		return m_ColumnNumber;
 	}
 
-	[[nodiscard]] int GetMaxSpeed() const
+	int GetMaxSpeed() const
 	{
 		return m_MaxSpeed;
 	}
 
-	[[nodiscard]] int GetRowVelocity() const
+	int GetRowVelocity() const
 	{
 		return m_RowVelocity;
 	}
 
-	[[nodiscard]] int GetColumnVelocity() const
+	int GetColumnVelocity() const
 	{
 		return m_ColumnVelocity;
 	}
@@ -69,7 +69,7 @@ public:
 		m_ColumnVelocity = columnVelocity;
 	}
 
-private:
+ private:
 	char m_IDNumber;
 	int m_RowNumber = 0;
 	int m_ColumnNumber = 0;

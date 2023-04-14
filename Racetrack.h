@@ -14,7 +14,7 @@
 
 class Racetrack
 {
-public:
+ public:
 	/**
 	 * Initialize the racetrack
 	 */
@@ -69,10 +69,9 @@ public:
 	 *m_Track
 	 **/
 	static std::string ReplaceStrChar(std::string str, const std::string& replace,
-			char ch);
+		char ch);
 
 	/**
-	 *Initialize m_Weights for the m_Track
 	 * @pre text file is provided using the correct characters for the m_Track
 	 * @post return weight array with the proper m_Weights initialized
 	 */
@@ -129,19 +128,25 @@ public:
 
 	void DeleteOldUserCar();
 
-	static void WinningScreen();
+	void UpdateSpeedPosition(int newYCoord, int newXCoord);
 
-private:
+	void DeleteOldSpeedCar();
+
+	void UpdateHandlePosition();
+
+	void DeleteOldHandleCar();
+
+	void WinningScreen();
+
+	void LosingScreen();
+
+ private:
 	UserCar user;
 	CPUSpeedCar speed;
 	CPUHandleCar handle;
 
 	int m_XCoordinate = 0;
 	int m_YCoordinate = 0;
-	int m_NewXCoordinate = 0;
-	int m_NewYCoordinate = 0;
-	float m_OldXCoordinate = 0.0;
-	float m_OldYCoordinate = 0.0;
 	float m_XSlope = 0.0;
 	float m_YSlope = 0.0;
 

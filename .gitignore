@@ -54,3 +54,7 @@ include/*
 lib/*
 bin/*
 test/test_runner
+.idea/codeStyles/codeStyleConfig.xml
+.gitignore
+.vscode/settings.json
+.idea/dictionaries/juanakajuan.xml
