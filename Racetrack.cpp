@@ -257,56 +257,58 @@ void Racetrack::InitWeights()
 	m_Weights[2][9] = 1;
 }
 
-void Racetrack::PutUserCarOnTrack()
+void Racetrack::PutCarsOntoTrack()
 {
-	for (int row = 1; row < Height(); row++)
+	int highestUserWeight = 0;
+	int highestSpeedWeight = 0;
+	int highestHandleWeight = 0;
+
+	// Place user car onto the track.
+	for (int row = 0; row < Height(); row++)
 	{
-		for (int column = 1; column < Width(); column++)
+		for (int column = 0; column < Width(); column++)
 		{
-			if (m_Weights[row][column] == 11)
+			if (m_Weights[row][column] > highestUserWeight && m_Weights[row][column] != m_W_WALL)
 			{
+				highestUserWeight = m_Weights[row][column];
 				user.SetRowNumber(row);
 				user.SetColumnNumber(column);
-				m_Track[user.GetRowNumber()][user.GetColumnNumber()] = user.GetIDNumber();
-				break;
 			}
 		}
-		break;
 	}
-}
+	m_Track[user.GetRowNumber()][user.GetColumnNumber()] = user.GetIDNumber();
 
-void Racetrack::PutCPUSpeedCarOnTrack()
-{
-	for (int row = 1; row < Height(); row++)
+	// Place speed car onto the track.
+	for (int row = 0; row < Height(); row++)
 	{
-		for (int column = 1; column < Width(); column++)
+		for (int column = 0; column < Width(); column++)
 		{
-			if (m_Weights[row][column] == 11 && m_Track[row][column] == ' ')
+			if (m_Weights[row][column] > highestSpeedWeight && m_Weights[row][column] != m_W_WALL
+					&& m_Track[row][column] == ' ')
 			{
+				highestSpeedWeight = m_Weights[row][column];
 				speed.SetRowNumber(row);
 				speed.SetColumnNumber(column);
-				m_Track[speed.GetRowNumber()][speed.GetColumnNumber()] = speed.GetIDNumber();
-				return;
 			}
 		}
 	}
-}
+	m_Track[speed.GetRowNumber()][speed.GetColumnNumber()] = speed.GetIDNumber();
 
-void Racetrack::PutCPUHandleCarOnTrack()
-{
-	for (int row = 1; row < Height(); row++)
+	// Place handle car onto the track.
+	for (int row = 0; row < Height(); row++)
 	{
-		for (int column = 1; column < Width(); column++)
+		for (int column = 0; column < Width(); column++)
 		{
-			if (m_Weights[row][column] == 11 && m_Track[row][column] == ' ')
+			if (m_Weights[row][column] > highestHandleWeight && m_Weights[row][column] != m_W_WALL
+					&& m_Track[row][column] == ' ')
 			{
+				highestHandleWeight = m_Weights[row][column];
 				handle.SetRowNumber(row);
 				handle.SetColumnNumber(column);
-				m_Track[handle.GetRowNumber()][handle.GetColumnNumber()] = handle.GetIDNumber();
-				return;
 			}
 		}
 	}
+	m_Track[handle.GetRowNumber()][handle.GetColumnNumber()] = handle.GetIDNumber();
 }
 
 void Racetrack::MoveUserCar()

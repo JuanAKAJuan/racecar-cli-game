@@ -1,7 +1,6 @@
 // TODO: Setup the Handle car movement.
 // TODO: Setup a win condition for the Handle Car.
 // TODO: Setup an algorithm to set the weights on any track.
-// TODO: Make the cars start on the highest weight instead of hard-coding them to start at 11.
 // TODO: Make cars be able to land in a previous position after colliding with a car or wall instead of just keeping them in their current position and skipping their turn.
 // TODO: Implement a custom feature.
 

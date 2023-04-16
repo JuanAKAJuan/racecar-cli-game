@@ -112,11 +112,7 @@ public:
 	// My functions
 	void DisplayAllStats();
 
-	void PutUserCarOnTrack();
-
-	void PutCPUSpeedCarOnTrack();
-
-	void PutCPUHandleCarOnTrack();
+	void PutCarsOntoTrack();
 
 	void MoveUserCar();
 
@@ -132,7 +128,7 @@ public:
 
 	void DeleteOldSpeedCar();
 
-	void UpdateHandlePosition();
+	void UpdateHandlePosition(int newYCoord, int newXCoord);
 
 	void DeleteOldHandleCar();
 
