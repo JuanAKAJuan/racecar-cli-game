@@ -14,7 +14,7 @@
 
 class Racetrack
 {
- public:
+public:
 	/**
 	 * Initialize the racetrack
 	 */
@@ -69,7 +69,7 @@ class Racetrack
 	 *m_Track
 	 **/
 	static std::string ReplaceStrChar(std::string str, const std::string& replace,
-		char ch);
+			char ch);
 
 	/**
 	 * @pre text file is provided using the correct characters for the m_Track
@@ -140,7 +140,7 @@ class Racetrack
 
 	void LosingScreen();
 
- private:
+private:
 	UserCar user;
 	CPUSpeedCar speed;
 	CPUHandleCar handle;

@@ -3,7 +3,7 @@
 #include <string>
 
 Racetrack::Racetrack()
-	: m_Track()
+		:m_Track()
 {
 	// Let the initializer list construct the m_Track vector
 	// m_Weights can not be created until the size of the m_Track is known
@@ -317,7 +317,7 @@ void Racetrack::MoveUserCar()
 
 	std::cout << "Enter X Coordinate: ";
 	while (!(std::cin >> m_XCoordinate) || m_XCoordinate > user.GetColumnVelocity() ||
-		   m_XCoordinate < -(user.GetColumnVelocity()))
+			m_XCoordinate < -(user.GetColumnVelocity()))
 	{
 		std::cout << "Please enter a valid number: ";
 		std::cin.clear();
@@ -336,7 +336,7 @@ void Racetrack::MoveUserCar()
 
 	std::cout << "Enter Y Coordinate: ";
 	while (!(std::cin >> m_YCoordinate) || m_YCoordinate > user.GetRowVelocity() ||
-		   m_YCoordinate < -(user.GetRowVelocity()))
+			m_YCoordinate < -(user.GetRowVelocity()))
 	{
 		std::cout << "Please enter a valid number: ";
 		std::cin.clear();
@@ -370,13 +370,13 @@ void Racetrack::MoveUserCar()
 		bool checkOldWall = m_Weights[int(round(oldYCoordinate))][int(round(oldXCoordinate))] == m_W_WALL;
 		bool checkNewWall = m_Weights[int(round(newYCoordinate))][int(round(newXCoordinate))] == m_W_WALL;
 		bool speedOldCollision = m_Track[int(round(oldYCoordinate))][int(round(oldXCoordinate))] ==
-								 m_Track[speed.GetRowNumber()][speed.GetColumnNumber()];
+				m_Track[speed.GetRowNumber()][speed.GetColumnNumber()];
 		bool handleOldCollision = m_Track[int(round(oldYCoordinate))][int(round(oldXCoordinate))] ==
-								  m_Track[handle.GetRowNumber()][handle.GetColumnNumber()];
+				m_Track[handle.GetRowNumber()][handle.GetColumnNumber()];
 		bool speedNewCollision = m_Track[int(round(newYCoordinate))][int(round(newXCoordinate))] ==
-								 m_Track[speed.GetRowNumber()][speed.GetColumnNumber()];
+				m_Track[speed.GetRowNumber()][speed.GetColumnNumber()];
 		bool handleNewCollision = m_Track[int(round(newYCoordinate))][int(round(newXCoordinate))] ==
-								  m_Track[handle.GetRowNumber()][handle.GetColumnNumber()];
+				m_Track[handle.GetRowNumber()][handle.GetColumnNumber()];
 
 		// Check to see if the user has won
 		if (checkFinish)
@@ -481,13 +481,13 @@ void Racetrack::MoveCPUSpeedCar()
 		bool checkOldWall = m_Weights[int(round(currentYPosition))][int(round(currentXPosition))] == m_W_WALL;
 		bool checkNewWall = m_Weights[int(round(newYPosition))][int(round(newXPosition))] == m_W_WALL;
 		bool userOldCollision = m_Track[int(round(currentYPosition))][int(round(currentXPosition))] ==
-								m_Track[user.GetRowNumber()][user.GetColumnNumber()];
+				m_Track[user.GetRowNumber()][user.GetColumnNumber()];
 		bool handleOldCollision = m_Track[int(round(currentYPosition))][int(round(currentXPosition))] ==
-								  m_Track[handle.GetRowNumber()][handle.GetColumnNumber()];
+				m_Track[handle.GetRowNumber()][handle.GetColumnNumber()];
 		bool userNewCollision = m_Track[int(round(newYPosition))][int(round(newXPosition))] ==
-								m_Track[user.GetRowNumber()][user.GetColumnNumber()];
+				m_Track[user.GetRowNumber()][user.GetColumnNumber()];
 		bool handleNewCollision = m_Track[int(round(newYPosition))][int(round(newXPosition))] ==
-								  m_Track[handle.GetRowNumber()][handle.GetColumnNumber()];
+				m_Track[handle.GetRowNumber()][handle.GetColumnNumber()];
 
 		if (checkFinish)
 		{
@@ -553,7 +553,6 @@ void Racetrack::MoveCPUSpeedCar()
 		DeleteOldSpeedCar();
 		UpdateSpeedPosition(newYPosition, newXPosition);
 	}
-
 }
 
 void Racetrack::MoveCPUHandleCar()
