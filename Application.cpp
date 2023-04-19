@@ -20,8 +20,10 @@ void Application::Run()
 		track.DisplayAllStats();
 		track.MoveUserCar();
 		track.MoveCPUSpeedCar();
+		track.MoveCPUHandleCar();
 	}
 }
+
 void Application::Title()
 {
 	std::cout << " ▄████▄   ██████  ▄████▄      ██▀███   ▄▄▄      ▄████▄   ██ ███▄    █    ▄████" << std::endl;
@@ -34,6 +36,7 @@ void Application::Title()
 	std::cout << "░       ░  ░  ░  ░              ░   ░   ░   ▒  ░         ▒    ░   ░ ░ ░ ░   ░ ░" << std::endl;
 	std::cout << "░ ░           ░  ░ ░            ░           ░  ░ ░       ░          ░       ░" << std::endl;
 }
+
 void Application::PromptTrackChoice()
 {
 	int userInputNumber;

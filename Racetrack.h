@@ -11,6 +11,8 @@
 #include <iostream>
 #include <string>
 #include <vector>
+#include <cstdlib>
+#include <ctime>
 
 class Racetrack
 {
@@ -30,14 +32,14 @@ public:
 	 *@pre m_Track is valid
 	 *@post return the number of rows in the m_Track
 	 */
-	[[nodiscard]] int Height() const;
+	int Height() const;
 
 	/**
 	 * Retrieve the m_Track Width
 	 * @pre m_Track is valid--i.e., all rows are of the same length.
 	 * @post return the number of columns in the m_Track
 	 */
-	[[nodiscard]] int Width() const;
+	int Width() const;
 
 	/**
 	 * Read the m_Track from an input stream, istream
@@ -118,7 +120,7 @@ public:
 
 	void MoveCPUSpeedCar();
 
-	void MoveCPUHandleCar();
+	int MoveCPUHandleCar();
 
 	void UpdateUserPosition();
 
