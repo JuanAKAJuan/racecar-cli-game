@@ -626,10 +626,8 @@ void Racetrack::MoveCPUSpeedCar()
 	}
 }
 
-int Racetrack::MoveCPUHandleCar()
+void Racetrack::MoveCPUHandleCar()
 {
-	float currentYPosition = float(handle.GetRowNumber());
-	float currentXPosition = float(handle.GetColumnNumber());
 	int oldYPosition = handle.GetRowNumber();
 	int oldXPosition = handle.GetColumnNumber();
 	int newYPosition = 0;
@@ -652,12 +650,14 @@ int Racetrack::MoveCPUHandleCar()
 
 			float ySlope = (float(oldYPosition) - float(row)) / 10;
 			float xSlope = (float(oldXPosition) - float(column)) / 10;
+			float currentYPosition = float(oldYPosition);
+			float currentXPosition = float(oldXPosition);
 
 			bool hitSomething = false;
 			for (int i = 0; i < 10; i++)
 			{
-				currentYPosition = float(row) - ySlope;
-				currentXPosition = float(column) - xSlope;
+				currentYPosition = currentYPosition - ySlope;
+				currentXPosition = currentXPosition - xSlope;
 
 				// Conditions to check collisions (Looks cleaner in the if statements
 				// to just have the name instead of the logic)
@@ -742,7 +742,6 @@ int Racetrack::MoveCPUHandleCar()
 
 	DeleteOldHandleCar();
 	UpdateHandlePosition(newYPosition, newXPosition);
-	return 2;
 }
 
 void Racetrack::UpdateUserPosition()

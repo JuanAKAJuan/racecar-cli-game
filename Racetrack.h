@@ -147,7 +147,7 @@ public:
 	 * @post: The handle car will move through the track at a distance its velocity allows,
 	 * avoiding other cars or walls.
 	 */
-	int MoveCPUHandleCar();
+	void MoveCPUHandleCar();
 
 	/*
 	 * Updates the user's car position on the track based on their input + or - their current position.
