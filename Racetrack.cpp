@@ -174,13 +174,38 @@ void Racetrack::InitWeights()
 	}
 	/**Assign Weights to blank spaces here**/
 
-	/**
-	 *PLEASE READ
-	 *The m_Weights below are specific to the current m_Track ONLY
-	 *You will need to develop an algorithm to dynamically
-	 *initialize m_Weights to any m_Track
-	 **/
+	int currentWeight = m_W_FINISH;
+	while (true)
+	{
+		bool found = false;
+		for (int row = 0; row < Height(); row++)
+		{
+			for (int column = 0; column < Width(); column++)
+			{
+				if (m_Weights[row][column] == currentWeight)
+				{
+					for (int i = row - 1; i <= row + 1; i++)
+					{
+						for (int j = column - 1; j <= column + 1; j++)
+						{
+							if (m_Weights[i][j] == m_W_UNINIT)
+							{
+								m_Weights[i][j] = currentWeight + 1;
+								found = true;
+							}
+						}
+					}
+				}
+			}
+		}
+		if (!found)
+		{
+			break;
+		}
+		currentWeight += 1;
+	}
 
+#if 0
 	// all coords for weight of 11
 	m_Weights[1][1] = 11;
 	m_Weights[1][2] = 11;
@@ -258,6 +283,7 @@ void Racetrack::InitWeights()
 	// all coords for weight of 1
 	m_Weights[2][8] = 1;
 	m_Weights[2][9] = 1;
+#endif
 }
 
 void Racetrack::PutCarsOntoTrack()

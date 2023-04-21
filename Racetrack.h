@@ -111,31 +111,98 @@ public:
 	 */
 	void SetWeight(int y, int x, int value);
 
-	// My functions
+	/*
+	 * Displays the stats of all 3 cars.
+	 * @pre: All the stats are initialized.
+	 * @post: The stats will be outputted into the console.
+	 */
 	void DisplayAllStats();
 
+	/*
+	 * Places the cars onto the track.
+	 * @pre: The cars have been given ID numbers.
+	 * @post: The cars will appear on the track at the highest weights.
+	 */
 	void PutCarsOntoTrack();
 
+	/*
+	 * Prompts the user where they want to move on the track and updates their position based
+	 * on their input.
+	 * @pre: NONE
+	 * @post: The user will input X and Y coordinates that they can reach.
+	 */
 	void MoveUserCar();
 
+	/*
+	 * The speed car will move through the track choosing the lowest weight that it can reach.
+	 * @pre: The user car finishes their turn.
+	 * @post: The speed car will move through the track at a distance its velocity allows,
+	 * not avoiding other cars or walls.
+	 */
 	void MoveCPUSpeedCar();
 
+	/*
+	 * The handle car will move through the track choosing the lowest weight that it can reach.
+	 * @pre: The speed car finishes their turn.
+	 * @post: The handle car will move through the track at a distance its velocity allows,
+	 * avoiding other cars or walls.
+	 */
 	int MoveCPUHandleCar();
 
+	/*
+	 * Updates the user's car position on the track based on their input + or - their current position.
+	 * @pre: User inputs the position it wants to move to.
+	 * @post: The car will be copied to the new position.
+	 */
 	void UpdateUserPosition();
 
+	/*
+	 * Deletes the user's car previous location on the track.
+	 * @pre: NONE
+	 * @post: The car in the previous loop will be deleted.
+	 */
 	void DeleteOldUserCar();
 
+	/*
+	 * Updates the speed car's position on the track based on the new coordinates from MoveCPUSpeedCar().
+	 * @pre: MoveCPUSpeedCar() chose new Y and X coordinates.
+	 * @post: The car will be copied to the new position.
+	 */
 	void UpdateSpeedPosition(int newYCoord, int newXCoord);
 
+	/*
+	 * Deletes the speed car's previous location on the track.
+	 * @pre: NONE
+	 * @post: The car in the previous loop will be deleted.
+	 */
 	void DeleteOldSpeedCar();
 
+	/*
+	 * Updates the handle car's position on the track based on the new coordinates from MoveCPUHandleCar().
+	 * @pre: MoveCPUHandleCar() chose new Y and X coordinates.
+	 * @post: The car will be copied to the new position.
+	 */
 	void UpdateHandlePosition(int newYCoord, int newXCoord);
 
+	/*
+	 * Deletes the handle car's previous location on the track.
+	 * @pre: NONE
+	 * @post: The car in the previous loop will be deleted.
+	 */
 	void DeleteOldHandleCar();
 
+	/*
+	 * Display a winning screen for the user's car.
+	 * @pre: The user car has passed the finish line.
+	 * @post: Text saying "YOU WON" will appear.
+	 */
 	void WinningScreen();
 
+	/*
+	 * Displays loosing screen for the user.
+	 * @pre: The speed or handle car passed the finish line before the user.
+	 * @post: Text Saying "YOU LOST" will appear.
+	 */
 	void LosingScreen();
 
 private:
