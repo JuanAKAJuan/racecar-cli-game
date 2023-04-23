@@ -347,13 +347,15 @@ void Racetrack::PutCarsOntoTrack()
 void Racetrack::MoveUserCar()
 {
 	// Get the users current coordinates
-	float oldXCoordinate = user.GetColumnNumber();
-	float oldYCoordinate = user.GetRowNumber();
+	float oldYCoordinate = float(user.GetRowNumber());
+	float oldXCoordinate = float(user.GetColumnNumber());
+	int yCoordinate = 0;
+	int xCoordinate = 0;
 
 	std::cout << "Enter X Coordinate: ";
-	while (!(std::cin >> m_XCoordinate) ||
-		   m_XCoordinate > user.GetColumnVelocity() ||
-		   m_XCoordinate < -(user.GetColumnVelocity()))
+	while (!(std::cin >> xCoordinate) ||
+		   xCoordinate > user.GetColumnVelocity() ||
+		   xCoordinate < -(user.GetColumnVelocity()))
 	{
 		std::cout << "Please enter a valid number: ";
 		std::cin.clear();
@@ -362,7 +364,7 @@ void Racetrack::MoveUserCar()
 
 	// As long as the user's input is not 0, and their velocity hasn't reached its
 	// max, the column velocity will increase by 1.
-	if (m_XCoordinate != 0)
+	if (xCoordinate != 0)
 	{
 		if (user.GetColumnVelocity() < user.GetMaxSpeed())
 		{
@@ -371,9 +373,9 @@ void Racetrack::MoveUserCar()
 	}
 
 	std::cout << "Enter Y Coordinate: ";
-	while (!(std::cin >> m_YCoordinate) ||
-		   m_YCoordinate > user.GetRowVelocity() ||
-		   m_YCoordinate < -(user.GetRowVelocity()))
+	while (!(std::cin >> yCoordinate) ||
+		   yCoordinate > user.GetRowVelocity() ||
+		   yCoordinate < -(user.GetRowVelocity()))
 	{
 		std::cout << "Please enter a valid number: ";
 		std::cin.clear();
@@ -382,7 +384,7 @@ void Racetrack::MoveUserCar()
 
 	// As long as the user's input is not 0, and their velocity hasn't reached its
 	// max, the row velocity will increase by 1.
-	if (m_YCoordinate != 0)
+	if (yCoordinate != 0)
 	{
 		if (user.GetRowVelocity() < user.GetMaxSpeed())
 		{
@@ -390,17 +392,18 @@ void Racetrack::MoveUserCar()
 		}
 	}
 
-	// Update new positions based on the coordinates the user typed in
-	int newXCoordinate = user.GetColumnNumber() + m_XCoordinate;
-	int newYCoordinate = user.GetRowNumber() + m_YCoordinate;
-	m_XSlope = (float(oldXCoordinate) - float(newXCoordinate)) / 10;
-	m_YSlope = (float(oldYCoordinate) - float(newYCoordinate)) / 10;
+	// Update new positions based on the coordinates the user typed in.
+	int newYCoordinate = user.GetRowNumber() + yCoordinate;
+	int newXCoordinate = user.GetColumnNumber() + xCoordinate;
+	float ySlope = (oldYCoordinate - float(newYCoordinate)) / 10;
+	float xSlope = (oldXCoordinate - float(newXCoordinate)) / 10;
 
-	// Go from old coordinates to new ones while showing the slanted path
+	// Check the user car's path.
 	for (int i = 0; i < 10; i++)
 	{
-		oldXCoordinate = oldXCoordinate - m_XSlope;
-		oldYCoordinate = oldYCoordinate - m_YSlope;
+		oldYCoordinate = oldYCoordinate - ySlope;
+		oldXCoordinate = oldXCoordinate - xSlope;
+		std::cout << round(oldYCoordinate) << "," << round(oldXCoordinate) << std::endl;
 
 		// Check for collisions and if the user passed the finish line.
 		bool checkFinish =
@@ -437,7 +440,7 @@ void Racetrack::MoveUserCar()
 		{
 			WinningScreen();
 			DeleteOldUserCar();
-			UpdateUserPosition();
+			UpdateUserPosition(yCoordinate, xCoordinate);
 			DisplayTrack();
 			std::cin.ignore();
 			std::cin.get();
@@ -451,8 +454,8 @@ void Racetrack::MoveUserCar()
 					<< "You hit a wall! Your velocity has been reset and max speed "
 					   "has been decreased."
 					<< std::endl;
-			m_XCoordinate = 0;
-			m_YCoordinate = 0;
+			xCoordinate = 0;
+			yCoordinate = 0;
 			if (user.GetMaxSpeed() != 1)
 			{
 				user.SetMaxSpeed(user.GetMaxSpeed() - 1);
@@ -470,8 +473,8 @@ void Racetrack::MoveUserCar()
 					<< "You hit a car! Your velocity has been reset and max speed "
 					   "has been decreased."
 					<< std::endl;
-			m_XCoordinate = 0;
-			m_YCoordinate = 0;
+			xCoordinate = 0;
+			yCoordinate = 0;
 			if (user.GetMaxSpeed() != 1)
 			{
 				user.SetMaxSpeed(user.GetMaxSpeed() - 1);
@@ -483,7 +486,7 @@ void Racetrack::MoveUserCar()
 	}
 
 	DeleteOldUserCar();
-	UpdateUserPosition();
+	UpdateUserPosition(yCoordinate, xCoordinate);
 }
 
 void Racetrack::MoveCPUSpeedCar()
@@ -744,10 +747,10 @@ void Racetrack::MoveCPUHandleCar()
 	UpdateHandlePosition(newYPosition, newXPosition);
 }
 
-void Racetrack::UpdateUserPosition()
+void Racetrack::UpdateUserPosition(int yCoord, int xCoord)
 {
-	user.SetRowNumber(user.GetRowNumber() + m_YCoordinate);
-	user.SetColumnNumber(user.GetColumnNumber() + m_XCoordinate);
+	user.SetRowNumber(user.GetRowNumber() + yCoord);
+	user.SetColumnNumber(user.GetColumnNumber() + xCoord);
 	m_Track[user.GetRowNumber()][user.GetColumnNumber()] = user.GetIDNumber();
 }
 

@@ -4,7 +4,12 @@
 
 class RaceCars
 {
- public:
+public:
+	/*
+	 * Display the stats of the cars.
+	 * @pre: Stats are initialized when the objects are created.
+	 * @post: Outputs into the console the stats of the cars.
+	 */
 	void DisplayStats() const;
 
 	/* Getters */
@@ -69,7 +74,7 @@ class RaceCars
 		m_ColumnVelocity = columnVelocity;
 	}
 
- private:
+private:
 	char m_IDNumber;
 	int m_RowNumber = 0;
 	int m_ColumnNumber = 0;

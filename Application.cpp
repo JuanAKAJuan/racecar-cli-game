@@ -12,7 +12,6 @@ void Application::Run()
 	track.DisplayWeights();
 
 	track.PutCarsOntoTrack();
-
 	while (true)
 	{
 		track.DisplayTrack();
@@ -62,9 +61,10 @@ void Application::PromptTrackChoice()
 	do
 	{
 		std::cout << "Pick a track:" << std::endl;
-		std::cout << "(1) track1.txt" << std::endl;
-		std::cout << "(2) track2.txt" << std::endl;
-		std::cout << "(3) track3.txt" << std::endl;
+		std::cout << "(1) Mushroom Cup" << std::endl;
+		std::cout << "(2) Flower Cup" << std::endl;
+		std::cout << "(3) Banana Cup" << std::endl;
+		std::cout << "(4) Special Cup (Custom Track)" << std::endl;
 		std::cin >> userInputNumber;
 
 		switch (userInputNumber)
@@ -78,9 +78,11 @@ void Application::PromptTrackChoice()
 		case 3:
 			m_TrackTextFile = "track3.txt";
 			break;
+		case 4:
+			m_TrackTextFile = "track4.txt";
 		default:
-			std::cout << "Please enter a number between 1-3" << std::endl;
+			std::cout << "Please enter a number between 1-4" << std::endl;
 			break;
 		}
-	} while (userInputNumber < 1 || userInputNumber > 3);
+	} while (userInputNumber < 1 || userInputNumber > 4);
 }

@@ -154,7 +154,7 @@ public:
 	 * @pre: User inputs the position it wants to move to.
 	 * @post: The car will be copied to the new position.
 	 */
-	void UpdateUserPosition();
+	void UpdateUserPosition(int yCoord, int xCoord);
 
 	/*
 	 * Deletes the user's car previous location on the track.
@@ -209,11 +209,6 @@ private:
 	UserCar user;
 	CPUSpeedCar speed;
 	CPUHandleCar handle;
-
-	int m_XCoordinate = 0;
-	int m_YCoordinate = 0;
-	float m_XSlope = 0.0;
-	float m_YSlope = 0.0;
 
 	/**
 	 * Weight of a wall

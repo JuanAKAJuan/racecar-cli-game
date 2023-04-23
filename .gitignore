@@ -58,3 +58,4 @@ test/test_runner
 .gitignore
 .vscode/settings.json
 .idea/dictionaries/juanakajuan.xml
+.cache/
