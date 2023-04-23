@@ -18,8 +18,8 @@ void Application::Run()
 		std::cout << std::endl;
 		track.DisplayAllStats();
 		track.MoveUserCar();
-		track.MoveCPUSpeedCar();
-		track.MoveCPUHandleCar();
+//		track.MoveCPUSpeedCar();
+//		track.MoveCPUHandleCar();
 	}
 }
 

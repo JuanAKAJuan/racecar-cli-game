@@ -172,8 +172,8 @@ void Racetrack::InitWeights()
 			}
 		}
 	}
-	/**Assign Weights to blank spaces here**/
 
+	// Weight initialization algorithm.
 	int currentWeight = m_W_FINISH;
 	while (true)
 	{
@@ -204,86 +204,6 @@ void Racetrack::InitWeights()
 		}
 		currentWeight += 1;
 	}
-
-#if 0
-	// all coords for weight of 11
-	m_Weights[1][1] = 11;
-	m_Weights[1][2] = 11;
-	m_Weights[1][3] = 11;
-	m_Weights[1][4] = 11;
-	m_Weights[1][5] = 11;
-	m_Weights[1][6] = 11;
-	m_Weights[2][6] = 11;
-
-	// all coords for weight of 10
-	m_Weights[2][1] = 10;
-	m_Weights[2][2] = 10;
-	m_Weights[2][3] = 10;
-	m_Weights[2][4] = 10;
-	m_Weights[2][5] = 10;
-	m_Weights[3][1] = 10;
-	m_Weights[3][5] = 10;
-	m_Weights[4][1] = 10;
-	m_Weights[5][1] = 10;
-	m_Weights[6][1] = 10;
-	m_Weights[7][1] = 10;
-
-	// all coords for weight of 9
-
-	m_Weights[3][2] = 9;
-	m_Weights[3][3] = 9;
-	m_Weights[3][4] = 9;
-	m_Weights[4][2] = 9;
-	m_Weights[5][2] = 9;
-	m_Weights[6][2] = 9;
-	m_Weights[7][2] = 9;
-
-	// all coords for weight of 8
-	m_Weights[4][3] = 8;
-	m_Weights[5][3] = 8;
-	m_Weights[6][3] = 8;
-	m_Weights[7][3] = 8;
-
-	// all coords for weight of 7
-	m_Weights[5][4] = 7;
-	m_Weights[6][4] = 7;
-	m_Weights[7][4] = 7;
-
-	// all coords for weight of 6
-	m_Weights[5][5] = 6;
-	m_Weights[6][5] = 6;
-	m_Weights[7][5] = 6;
-	m_Weights[7][6] = 6;
-	m_Weights[7][7] = 6;
-	m_Weights[7][8] = 6;
-	m_Weights[7][9] = 6;
-
-	// all coords for weight of 5
-	m_Weights[5][6] = 5;
-	m_Weights[6][6] = 5;
-	m_Weights[6][7] = 5;
-	m_Weights[6][8] = 5;
-	m_Weights[6][9] = 5;
-
-	// all coords for weight of 4
-	m_Weights[5][7] = 4;
-	m_Weights[5][8] = 4;
-	m_Weights[5][9] = 4;
-	m_Weights[4][8] = 4;
-	m_Weights[4][9] = 4;
-
-	// all coords for weight of 3
-	m_Weights[4][8] = 3;
-	m_Weights[4][9] = 3;
-
-	// all coords for weight of 2
-	m_Weights[3][8] = 2;
-	m_Weights[3][9] = 2;
-
-	// all coords for weight of 1
-	m_Weights[2][8] = 1;
-	m_Weights[2][9] = 1;
-#endif
 }
 
 void Racetrack::PutCarsOntoTrack()
@@ -351,6 +271,8 @@ void Racetrack::MoveUserCar()
 	float oldXCoordinate = float(user.GetColumnNumber());
 	int yCoordinate = 0;
 	int xCoordinate = 0;
+	std::vector<int> lastRows;
+	std::vector<int> lastColumns;
 
 	std::cout << "Enter X Coordinate: ";
 	while (!(std::cin >> xCoordinate) ||
@@ -397,12 +319,15 @@ void Racetrack::MoveUserCar()
 	int newXCoordinate = user.GetColumnNumber() + xCoordinate;
 	float ySlope = (oldYCoordinate - float(newYCoordinate)) / 10;
 	float xSlope = (oldXCoordinate - float(newXCoordinate)) / 10;
+	bool hitWall = false;
 
 	// Check the user car's path.
 	for (int i = 0; i < 10; i++)
 	{
 		oldYCoordinate = oldYCoordinate - ySlope;
 		oldXCoordinate = oldXCoordinate - xSlope;
+		lastRows.push_back(round(oldYCoordinate));
+		lastColumns.push_back(round(oldXCoordinate));
 		std::cout << round(oldYCoordinate) << "," << round(oldXCoordinate) << std::endl;
 
 		// Check for collisions and if the user passed the finish line.
@@ -410,29 +335,17 @@ void Racetrack::MoveUserCar()
 				m_Weights[int(round(oldYCoordinate))][int(
 						round(oldXCoordinate))] ==
 				m_W_FINISH;
-		bool checkOldWall =
+		bool checkWall =
 				m_Weights[int(round(oldYCoordinate))][int(
 						round(oldXCoordinate))] ==
 				m_W_WALL;
-		bool checkNewWall =
-				m_Weights[int(round(newYCoordinate))][int(
-						round(newXCoordinate))] ==
-				m_W_WALL;
-		bool speedOldCollision =
+		bool speedCollision =
 				m_Track[int(round(oldYCoordinate))][int(
 						round(oldXCoordinate))] ==
 				m_Track[speed.GetRowNumber()][speed.GetColumnNumber()];
-		bool handleOldCollision =
+		bool handleCollision =
 				m_Track[int(round(oldYCoordinate))][int(
 						round(oldXCoordinate))] ==
-				m_Track[handle.GetRowNumber()][handle.GetColumnNumber()];
-		bool speedNewCollision =
-				m_Track[int(round(newYCoordinate))][int(
-						round(newXCoordinate))] ==
-				m_Track[speed.GetRowNumber()][speed.GetColumnNumber()];
-		bool handleNewCollision =
-				m_Track[int(round(newYCoordinate))][int(
-						round(newXCoordinate))] ==
 				m_Track[handle.GetRowNumber()][handle.GetColumnNumber()];
 
 		// Check to see if the user has won
@@ -446,7 +359,7 @@ void Racetrack::MoveUserCar()
 			std::cin.get();
 			exit(0);
 		}
-		else if (checkOldWall || checkNewWall)
+		else if (checkWall)
 		{
 			// Notifies the user they hit a wall, resets their velocities,
 			// and lowers their max speed by 1
@@ -462,10 +375,10 @@ void Racetrack::MoveUserCar()
 			}
 			user.SetColumnVelocity(1);
 			user.SetRowVelocity(1);
+			hitWall = true;
 			break;
 		}
-		else if (speedOldCollision || handleOldCollision || speedNewCollision ||
-				 handleNewCollision)
+		else if (speedCollision || handleCollision)
 		{
 			// Notifies the user they hit another car, resets their velocities,
 			// and lowers their max speed by 1
@@ -483,6 +396,19 @@ void Racetrack::MoveUserCar()
 			user.SetRowVelocity(1);
 			break;
 		}
+	}
+
+	lastRows.erase(std::unique(lastRows.begin(), lastRows.end()), lastRows.end());
+	lastColumns.erase(std::unique(lastColumns.begin(), lastColumns.end()), lastColumns.end());
+	if (hitWall && lastRows.size() > 1 && lastColumns.size() > 1)
+	{
+		lastRows.pop_back();
+		lastColumns.pop_back();
+		DeleteOldUserCar();
+		user.SetRowNumber(lastRows.back());
+		user.SetColumnNumber(lastColumns.back());
+		yCoordinate = 0;
+		xCoordinate = 0;
 	}
 
 	DeleteOldUserCar();
