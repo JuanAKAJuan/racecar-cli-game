@@ -319,7 +319,7 @@ void Racetrack::MoveUserCar()
 	int newXCoordinate = user.GetColumnNumber() + xCoordinate;
 	float ySlope = (oldYCoordinate - float(newYCoordinate)) / 10;
 	float xSlope = (oldXCoordinate - float(newXCoordinate)) / 10;
-	bool hitWall = false;
+	bool hitSomething = false;
 
 	// Check the user car's path.
 	for (int i = 0; i < 10; i++)
@@ -328,7 +328,6 @@ void Racetrack::MoveUserCar()
 		oldXCoordinate = oldXCoordinate - xSlope;
 		lastRows.push_back(round(oldYCoordinate));
 		lastColumns.push_back(round(oldXCoordinate));
-		std::cout << round(oldYCoordinate) << "," << round(oldXCoordinate) << std::endl;
 
 		// Check for collisions and if the user passed the finish line.
 		bool checkFinish =
@@ -375,7 +374,7 @@ void Racetrack::MoveUserCar()
 			}
 			user.SetColumnVelocity(1);
 			user.SetRowVelocity(1);
-			hitWall = true;
+			hitSomething = true;
 			break;
 		}
 		else if (speedCollision || handleCollision)
@@ -394,13 +393,15 @@ void Racetrack::MoveUserCar()
 			}
 			user.SetColumnVelocity(1);
 			user.SetRowVelocity(1);
+			hitSomething = true;
 			break;
 		}
 	}
 
+	// Moves the car to the position right before it made a collision.
 	lastRows.erase(std::unique(lastRows.begin(), lastRows.end()), lastRows.end());
 	lastColumns.erase(std::unique(lastColumns.begin(), lastColumns.end()), lastColumns.end());
-	if (hitWall && lastRows.size() > 1 && lastColumns.size() > 1)
+	if (hitSomething && lastRows.size() > 1 && lastColumns.size() > 1)
 	{
 		lastRows.pop_back();
 		lastColumns.pop_back();
@@ -424,7 +425,9 @@ void Racetrack::MoveCPUSpeedCar()
 	int newYPosition = 0;
 	int newXPosition = 0;
 	int lowestNumber = m_Weights[int(currentYPosition)][int(currentXPosition)];
-	bool loseTurn = false;
+	bool hitSomething = false;
+	std::vector<int> lastRows;
+	std::vector<int> lastColumns;
 
 	// Look at the elements around the car.
 	for (int row = int(currentYPosition) - speed.GetRowVelocity();
@@ -458,6 +461,8 @@ void Racetrack::MoveCPUSpeedCar()
 	{
 		currentYPosition = currentYPosition - ySlope;
 		currentXPosition = currentXPosition - xSlope;
+		lastRows.push_back(round(currentYPosition));
+		lastColumns.push_back(round(currentXPosition));
 
 		bool checkFinish =
 				m_Weights[int(round(currentYPosition))][int(
@@ -507,7 +512,7 @@ void Racetrack::MoveCPUSpeedCar()
 			}
 			speed.SetColumnVelocity(1);
 			speed.SetRowVelocity(1);
-			loseTurn = true;
+			hitSomething = true;
 			break;
 		}
 		else if (userOldCollision || handleOldCollision || userNewCollision ||
@@ -523,12 +528,22 @@ void Racetrack::MoveCPUSpeedCar()
 			}
 			speed.SetColumnVelocity(1);
 			speed.SetRowVelocity(1);
-			loseTurn = true;
+			hitSomething = true;
 			break;
 		}
 	}
 
-	if (!loseTurn)
+	// Moves the car to the position right before it made a collision.
+	lastRows.erase(std::unique(lastRows.begin(), lastRows.end()), lastRows.end());
+	lastColumns.erase(std::unique(lastColumns.begin(), lastColumns.end()), lastColumns.end());
+	if (hitSomething && lastRows.size() > 1 && lastColumns.size() > 1)
+	{
+		lastRows.pop_back();
+		lastColumns.pop_back();
+		DeleteOldSpeedCar();
+		UpdateSpeedPosition(lastRows.back(), lastColumns.back());
+	}
+	else if (!hitSomething)
 	{
 		// As long as the speed car's newYPosition is not 0, and their velocity
 		// hasn't reached its max, the row velocity will increase by 1.
@@ -581,8 +596,9 @@ void Racetrack::MoveCPUHandleCar()
 			float xSlope = (float(oldXPosition) - float(column)) / 10;
 			float currentYPosition = float(oldYPosition);
 			float currentXPosition = float(oldXPosition);
-
 			bool hitSomething = false;
+
+			// Path checking.
 			for (int i = 0; i < 10; i++)
 			{
 				currentYPosition = currentYPosition - ySlope;
@@ -638,6 +654,7 @@ void Racetrack::MoveCPUHandleCar()
 	bool checkFinish =
 			m_Weights[int(round(newYPosition))][int(round(newXPosition))] ==
 			m_W_FINISH;
+
 	if (checkFinish)
 	{
 		LosingScreen();
@@ -649,7 +666,7 @@ void Racetrack::MoveCPUHandleCar()
 		exit(0);
 	}
 
-	// As long as the speed car's newYPosition is not 0, and their velocity
+	// As long as the handle car's newYPosition is not 0, and their velocity
 	// hasn't reached its max, the row velocity will increase by 1.
 	if (abs(newYPosition - int(oldYPosition)) > 0)
 	{
@@ -659,7 +676,7 @@ void Racetrack::MoveCPUHandleCar()
 		}
 	}
 
-	// As long as the speed car's newXPosition is not 0, and their velocity
+	// As long as the handle car's newXPosition is not 0, and their velocity
 	// hasn't reached its max, the column velocity will increase by 1.
 	if (abs(newXPosition - int(oldXPosition)) > 0)
 	{

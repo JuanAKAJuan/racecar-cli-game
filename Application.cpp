@@ -18,8 +18,12 @@ void Application::Run()
 		std::cout << std::endl;
 		track.DisplayAllStats();
 		track.MoveUserCar();
-//		track.MoveCPUSpeedCar();
-//		track.MoveCPUHandleCar();
+#if 1 // Set to 0 to turn the speed car off.
+		track.MoveCPUSpeedCar();
+#endif
+#if 1 // Set to 0 to turn the handle car off.
+		track.MoveCPUHandleCar();
+#endif
 	}
 }
 

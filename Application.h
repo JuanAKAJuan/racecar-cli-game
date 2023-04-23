@@ -28,7 +28,6 @@ public:
 	void PromptTrackChoice();
 
 private:
-	// Create RaceTrack object
 	Racetrack track;
 	std::string m_TrackTextFile;
 };
